@@ -51,17 +51,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amplitude: 0.03
+    - _Amplitude: 0.04
     - _Direction: 2.13
-    - _FadeDepth: -0.97
+    - _FadeDepth: -0.81
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Speed: 0.76
-    - _Wavelength: 2.18
+    - _Wavelength: 1.21
     m_Colors:
     - _Color: {r: 0.4716981, g: 0.2566156, b: 0.2566156, a: -3.17}
     - _Deep_Color: {r: 0.5345911, g: 0.11668345, b: 0.082373984, a: 1}
-    - _Linear_Velocity: {r: 0, g: 4.58, b: 0, a: 0}
+    - _Horizon_color: {r: 0.55445796, g: 0.16078432, b: 0.9254902, a: 1}
+    - _Linear_Velocity: {r: 0, g: 0.98, b: 0, a: 0}
     - _Shallow_color: {r: 0.7058824, g: 0.3710904, b: 0.31764707, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
