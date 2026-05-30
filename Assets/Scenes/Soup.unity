@@ -1810,7 +1810,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b1bb9a6ebaabc345b24e9dc0f3cc54f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: -0.000000018929867
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b1bb9a6ebaabc345b24e9dc0f3cc54f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1917,7 +1917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   junkManager: {fileID: 564232872}
   waveGen: {fileID: 325099796}
-  junkPool: {fileID: 0}
+  prefab: {fileID: 7908358660299771742, guid: 85e9bca38354f02408428f866085460d, type: 3}
   minSpawnX: -20
   maxSpawnX: -15
   spawnZ: 50
@@ -2020,7 +2020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   junkManager: {fileID: 564232872}
   waveGen: {fileID: 325099796}
-  junkPool: {fileID: 0}
+  prefab: {fileID: 7908358660299771742, guid: 85e9bca38354f02408428f866085460d, type: 3}
   minSpawnX: 15
   maxSpawnX: 20
   spawnZ: 50
@@ -2495,7 +2495,6 @@ MonoBehaviour:
   dispatcher: {fileID: 1992484648}
   speed: 5
   score: 0
-  fuel: 0
 --- !u!4 &2144276489
 Transform:
   m_ObjectHideFlags: 0
