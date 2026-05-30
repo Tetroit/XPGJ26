@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,13 +9,15 @@ public class PlayerControls : MonoBehaviour
     private InputS inputS;
     private Vector2 playerInputMove;
     private bool playerMoves = false;
-
+    public Vector2 tilt;
+    
     [SerializeField]
     private float movementSpeed;
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         inputS = new InputS();
+        tilt = Vector2.zero;
     }
     private void FixedUpdate()
     {
@@ -48,8 +51,12 @@ public class PlayerControls : MonoBehaviour
     }
     void MovePlayer()
     {
-        playerInputMove = playerInputMove.normalized * movementSpeed;
-        Vector3 moveVec = new Vector3(playerInputMove.x, 0, playerInputMove.y);
+        Vector3 playerInputMoveCalib = (playerInputMove.normalized + tilt * 0.5f) * movementSpeed;
+        Vector3 moveVec = new Vector3(playerInputMoveCalib.x, 0, playerInputMoveCalib.y);
         rb.linearVelocity = moveVec;
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(tilt.x, 0, tilt.y));
     }
 }

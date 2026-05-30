@@ -40,6 +40,7 @@ void GerstnerWave_float(
 	outBinorm.z = 1 - amplitude * k * d.y * d.y * sin(f);
 	
 	outNorm = normalize(cross(outBinorm, outTan));
+	outPos = TransformWorldToObject(outPos);
 }
 
 void MultiGerstner_float(
@@ -50,6 +51,9 @@ void MultiGerstner_float(
 	float wavelength, 
 	float speed,
 	float dir,
+	float wavMult,
+	float ampMult,
+	float multiRot,
 	out float3 outPos,
 	out float3 outNorm)
 {
@@ -67,10 +71,10 @@ void MultiGerstner_float(
 		tan += tan1;
 		binorm += bin1;
 		
- 		amplitude *= 0.67f;
- 		wavelength *= 0.66f;
- 		dir += 1.2f;
+ 		amplitude *= ampMult;
+ 		wavelength *= wavMult;
+ 		dir += multiRot;
 	}
-	outPos = p + disp;
+	outPos = TransformWorldToObject(p + disp);
 	outNorm = normalize(cross(binorm, tan));
 }

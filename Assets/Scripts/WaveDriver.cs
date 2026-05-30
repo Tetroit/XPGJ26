@@ -11,8 +11,8 @@ public class WaveDriver : MonoBehaviour
     }
     void Update()
     {
-        transform.rotation = Quaternion.Euler(0f, 0f, 10 * Mathf.Cos(Time.time * Mathf.Lerp(1.3f, 2.1f, Mathf.Cos(Time.time))));
-        transform.position = startPos + new Vector3(0, Mathf.Sin(Time.time) * 1.2f, 0);
+        transform.rotation = Quaternion.Euler(0f, 0f, 5 * Mathf.Cos(Time.time * 1.3f));
+        transform.position = startPos + new Vector3(0, Mathf.Sin(Time.time) * 0.5f, 0);
         onTilt?.Invoke(transform.rotation);
     }
 }

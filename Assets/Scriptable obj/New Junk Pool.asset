@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4d9738be8cea3459349796827b59e5, type: 3}
+  m_Name: New Junk Pool
+  m_EditorClassIdentifier: Assembly-CSharp::JunkPool
+  src:
+  - prob: 2
+    junkType: {fileID: 7908358660299771742, guid: 85e9bca38354f02408428f866085460d, type: 3}
+  - prob: 2
+    junkType: {fileID: 7908358660299771742, guid: 85e9bca38354f02408428f866085460d, type: 3}
+  - prob: 2
+    junkType: {fileID: 7908358660299771742, guid: 85e9bca38354f02408428f866085460d, type: 3}
+  - prob: 2
+    junkType: {fileID: 7352460901995353247, guid: 6c6260fdc3659824caccfde78248c13d, type: 3}
