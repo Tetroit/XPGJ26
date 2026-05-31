@@ -7,7 +7,6 @@ public class JunkEffects : MonoBehaviour
     {
         Food,
         Poop,
-        GoldenPoop,
         Pearto,
         Maxwell,
         Coal,
@@ -24,6 +23,18 @@ public class JunkEffects : MonoBehaviour
         else if (junkType == JunkType.Poop)
         {
             GameManager.instance.AddScore(-1);
+        }
+        if (junkType == JunkType.Maxwell)
+        {
+            GameManager.instance.AddPlayerSpeed(1);
+        }
+        if (junkType == JunkType.Pearto)
+        {
+            GameManager.instance.DiePearto();
+        }
+        if (junkType == JunkType.Coal)
+        {
+            GameManager.instance.DieOOM();
         }
     }
     public void PutToOven()
@@ -43,6 +54,10 @@ public class JunkEffects : MonoBehaviour
         if (junkType == JunkType.Maxwell)
         {
             GameManager.instance.DieMaxwell();
+        }
+        if (junkType == JunkType.Pearto)
+        {
+            GameManager.instance.AddSpeed(1);
         }
     }
 }

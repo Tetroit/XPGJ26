@@ -13,7 +13,7 @@ public class PlayerControls : MonoBehaviour
     public Vector3 startPos;
     
     [SerializeField]
-    private float movementSpeed;
+    public float movementSpeed = 5;
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -22,6 +22,10 @@ public class PlayerControls : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (rb.position.y < -10)
+        {
+            GameManager.instance.DieOOM();
+        }
         if (playerMoves)
         {
             MovePlayer();
@@ -34,6 +38,7 @@ public class PlayerControls : MonoBehaviour
     public void StopGame()
     {
         rb.isKinematic = true;
+        rb.position = startPos;
     }
     void Start()
     {
@@ -53,8 +58,11 @@ public class PlayerControls : MonoBehaviour
     
     void PerformMove(InputAction.CallbackContext ctx)
     {
-        playerInputMove = ctx.ReadValue<Vector2>();
-        playerMoves = true;
+        if (GameManager.instance.gameRunning)
+        {
+            playerInputMove = ctx.ReadValue<Vector2>();
+            playerMoves = true;
+        }
     }
     void StopMove(InputAction.CallbackContext ctx)
     {

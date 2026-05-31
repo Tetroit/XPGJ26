@@ -13,11 +13,11 @@ public class JunkSpawner : MonoBehaviour
     public float maxSpawnX;
     public float spawnZ = 50;
 
-    public float minSpeed;
-    public float maxSpeed;
+    public float minSpeed = 4;
+    public float maxSpeed = 6;
     
-    public float minSpawnT;
-    public float maxSpawnT;
+    public float minSpawnT = 5;
+    public float maxSpawnT = 10;
 
     public void StartGame()
     {
@@ -31,6 +31,8 @@ public class JunkSpawner : MonoBehaviour
     {
         minSpeed = velocity * 0.8f;
         maxSpeed = velocity * 1.2f;
+        minSpawnT = 25f / velocity;
+        maxSpawnT = 50f / velocity;
     }
     private IEnumerator SpawnCoroutine()
     {

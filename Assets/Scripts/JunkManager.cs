@@ -19,4 +19,12 @@ public class JunkManager : MonoBehaviour
         }
         return closest;
     }
+    public void ClearJunks()
+    {
+        foreach (var junk in junks)
+        {
+            Destroy(junk.gameObject);
+        }
+        junks.Clear();
+    }
 }

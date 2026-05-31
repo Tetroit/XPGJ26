@@ -16,8 +16,6 @@ public class GameManager : MonoBehaviour
     public bool gameRunning = false;
     public float maxFuel = 10;
 
-    public Button startB;
-    public Button tutorialB;
     [SerializeField]
     CanvasGroup tutorial;
     [SerializeField]
@@ -31,7 +29,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Camera MainCam;
     [SerializeField]
-    private CanvasGroup maxWellDeathNote;
+    private CanvasGroup peartoDeathNote;
+    [SerializeField]
+    JunkManager junkManagr;
+    
+    [SerializeField]
+    PlayerControls controls;
+    [SerializeField]
+    GameObject BOOM;
     void Awake()
     {
         inputS = new InputS();
@@ -54,6 +59,7 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
+        gameRunning = true;
         inputS.Player.Enable();
         menu.interactable = false;
         menu.DOFade(0f, 0.25f); 
@@ -70,24 +76,29 @@ public class GameManager : MonoBehaviour
         menu.interactable = false;
         tutorial.DOFade(1f, 0.25f).OnComplete(() => {
             tutorial.interactable = true;
+            tutorial.blocksRaycasts = true;
         });
     }
     public void HideTutorial()
     {
         tutorial.interactable = false;
+        tutorial.blocksRaycasts = false;
         tutorial.DOFade(0f, 0.25f).OnComplete(() => {
             menu.interactable = true;
         });  
     }
     public void StopGame()
     {
+        junkManagr.ClearJunks();
+        gameRunning = false;
         inputS.Player.Disable();
         dispatcher.OnGameStop?.Invoke();
         StopCoroutine(SpeedUpFuel());
-        tutorial.DOFade(1f, 0.25f).OnComplete(() => {
-            tutorial.interactable = true;
+        menu.DOFade(1f, 0.25f).OnComplete(() => {
+            menu.interactable = true;
         });
         Debug.Log("Game Stopped");
+        ResetGame();
     }
     public void ResetGame()
     {
@@ -106,8 +117,11 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        fuel -= Time.deltaTime * fuelSpeed;
-        dispatcher.OnFuelChange?.Invoke(fuel);
+        if (gameRunning)
+        {
+            fuel -= Time.deltaTime * fuelSpeed;
+            dispatcher.OnFuelChange?.Invoke(fuel);
+        }
     }
     public void AddScore(int score)
     {
@@ -124,11 +138,6 @@ public class GameManager : MonoBehaviour
         this.speed = speed;
         dispatcher.OnSpeedChange?.Invoke(speed);
     }
-
-    public void SpawnMaxwell()
-    {
-        
-    }
     public void AddFuel(int val)
     {
         fuel += val;
@@ -136,14 +145,64 @@ public class GameManager : MonoBehaviour
     }
     public void DieMaxwell()
     {
-        
+        Debug.Log("Died Maxwell");
+        StopGame();
+        ResetGame();
+        var seq = DOTween.Sequence()
+            .AppendCallback(() => {
+                MainCam.enabled = false;
+                SideCam.enabled = true;
+            })
+            .AppendInterval(0.5f)
+            .AppendCallback(() => {
+                BOOM.SetActive(true);
+            })
+            .AppendInterval(0.5f)
+            .AppendCallback(() => {
+                MainCam.enabled = true;
+                SideCam.enabled = false;
+                BOOM.SetActive(false);
+            });
     }
     public void DieOOM()
     {
+        Debug.Log("Died OOM");
+        StopGame();
+        ResetGame();
+        ship.GetComponent<WaveDriver>().enabled = false;
         var seq = DOTween.Sequence().AppendCallback(() => {
-            MainCam.enabled = false;
-            SideCam.enabled = false;
-        }).AppendCallback(0.5).;
-        
-}
+                MainCam.enabled = false;
+                SideCam.enabled = true;
+            })
+            .AppendInterval(0.5f)
+            .Append(ship.transform.DOLocalRotate(new Vector3(90, 0, 0), 0.7f))
+            .AppendInterval(0.3f)
+            .Append(ship.transform.DOMove(new Vector3(0, -50, 0), 1f))
+            .AppendCallback(() => {
+                MainCam.enabled = true;
+                SideCam.enabled = false;
+                ship.GetComponent<WaveDriver>().enabled = true;
+            });
+
+    }
+
+    public void DiePearto()
+    {
+        Debug.Log("Died OOM");
+        StopGame();
+        ResetGame();
+        ship.GetComponent<WaveDriver>().enabled = false;
+        var seq = DOTween.Sequence()
+            .Append(peartoDeathNote.DOFade(1, 0.5f))
+            .AppendInterval(1f)
+            .Append(peartoDeathNote.DOFade(0, 0.5f));
+    }
+    public void AddSpeed(int i)
+    {
+        SetSpeed(speed + i);
+    }
+    public void AddPlayerSpeed(int i)
+    {
+        controls.movementSpeed += i;
+    }
 }
