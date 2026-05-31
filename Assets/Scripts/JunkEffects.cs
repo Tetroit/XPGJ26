@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class JunkEffects : MonoBehaviour
@@ -14,7 +15,7 @@ public class JunkEffects : MonoBehaviour
     }
     [SerializeField]
     private JunkType junkType;
-    void Apply()
+    public void Apply()
     {
         if (junkType == JunkType.Food)
         {
@@ -23,6 +24,25 @@ public class JunkEffects : MonoBehaviour
         else if (junkType == JunkType.Poop)
         {
             GameManager.instance.AddScore(-1);
+        }
+    }
+    public void PutToOven()
+    {
+        if (junkType == JunkType.Food)
+        {
+            GameManager.instance.AddFuel(1);
+        }
+        if (junkType == JunkType.Poop)
+        {
+            GameManager.instance.AddFuel(-1);
+        }
+        if (junkType == JunkType.Coal)
+        {
+            GameManager.instance.AddFuel(1);
+        }
+        if (junkType == JunkType.Maxwell)
+        {
+            GameManager.instance.DieMaxwell();
         }
     }
 }

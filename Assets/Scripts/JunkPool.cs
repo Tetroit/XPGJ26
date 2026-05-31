@@ -25,11 +25,8 @@ public class JunkPool : ScriptableObject
     }
     public OceanJunk Pull()
     {
-        if (total < 0)
-        {
-            Bake();
-        }
-        float rng = Random.Range(0, total);
+        Bake();
+        float rng = Random.Range(0.0f, total);
         float val = 0;
         for (int i = 0; i < total; i++)
         {

@@ -1,18 +1,37 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAvatar : MonoBehaviour
 {
     [SerializeField]
     JunkManager junkManager;
-    private OceanJunk context;
+    public OceanJunk context;
     public float reachDist = 3f;
+    public bool useFurnace = false;
+    public bool hasItem = false;
     void Update()
     {
-        if (junkManager)
+        if (junkManager && !hasItem)
             ScanJunk();
+        if (hasItem)
+        {
+            context.transform.position = transform.position + transform.up * 2;
+        }
     }
-    
+    private void OnEnable()
+    {
+        GameManager.instance.inputS.Player.Interact.started+=ProcessInteract;
+    }
+    private void OnDisable()
+    {
+        GameManager.instance.inputS.Player.Interact.started-=ProcessInteract;
+    }
+    void Awake()
+    {
+        GameManager.instance.inputS = new InputS();
+    }
     void ScanJunk()
     {
         if (context != null)
@@ -24,12 +43,12 @@ public class PlayerAvatar : MonoBehaviour
             }
         }
         var inst = junkManager.GetClosest(transform.position, out float distance);
-        if (context != null && inst != context)
-        {
-            context.UnhighlightJunk();
-        }
         if (distance < reachDist)
         {
+            if (context != null && inst != context)
+            {
+                context.UnhighlightJunk();
+            }
             context = inst;
             context.HighlightJunk();
         }
@@ -40,5 +59,45 @@ public class PlayerAvatar : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, reachDist);
         if (context != null)
             Gizmos.DrawLine(transform.position, context.transform.position);
+    }
+
+    void ProcessInteract(InputAction.CallbackContext ctx)
+    {
+        if (!hasItem && context != null)
+        {
+            TakeObject();
+        }
+        else if (hasItem)
+        {
+            if (useFurnace)
+            {
+                BurnObject();
+            }
+            else
+            {
+                EatObject();
+            }
+        }
+    }
+    void TakeObject()
+    {
+        context.junkManager.junks.Remove(context);
+        context.transform.position = transform.position + transform.up * 2;
+        context.isSwimming = false;
+        hasItem = true;
+    }
+    void BurnObject()
+    {
+        hasItem = false;
+        var eff = context.GetComponent<JunkEffects>();
+        eff.PutToOven();
+        Destroy(context.gameObject);
+    }
+    void EatObject()
+    {
+        hasItem = false;
+        var eff = context.GetComponent<JunkEffects>();
+        eff.Apply();
+        Destroy(context.gameObject);
     }
 }

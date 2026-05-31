@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2587759727709684584}
   - component: {fileID: 3886065058429857636}
   - component: {fileID: 7908358660299771742}
+  - component: {fileID: -226647670372100171}
   m_Layer: 0
   m_Name: Junk
   m_TagString: Untagged
@@ -107,3 +108,16 @@ MonoBehaviour:
   waveGen: {fileID: 0}
   meshRenderer: {fileID: 0}
   speed: {x: 0, y: 0, z: -2.4397173}
+--- !u!114 &-226647670372100171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433202199042394286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0482e8b5e0ce074c9846aef4e265d53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JunkEffects
+  junkType: 0

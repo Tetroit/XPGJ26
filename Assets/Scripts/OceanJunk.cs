@@ -8,6 +8,7 @@ public class OceanJunk : MonoBehaviour
     private Vector3 startPos;
     [SerializeField]
     public Vector3 speed;
+    public bool isSwimming = true;
     void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
@@ -19,13 +20,16 @@ public class OceanJunk : MonoBehaviour
 
     void Update()
     {
-        startPos += speed * Time.deltaTime;
-        var waveLoc = waveGen.SampleGerstner(Time.time, new Vector2(startPos.x, startPos.z));
-        transform.position = waveLoc.position;
-        if (transform.position.z < -50)
+        if (isSwimming)
         {
-            junkManager.junks.Remove(this);
-            Destroy(gameObject);
+            startPos += speed * Time.deltaTime;
+            var waveLoc = waveGen.SampleGerstner(Time.time, new Vector2(startPos.x, startPos.z));
+            transform.position = waveLoc.position;
+            if (transform.position.z < -50)
+            {
+                junkManager.junks.Remove(this);
+                Destroy(gameObject);
+            }
         }
     }
     public void HighlightJunk()

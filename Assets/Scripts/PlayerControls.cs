@@ -10,6 +10,7 @@ public class PlayerControls : MonoBehaviour
     private Vector2 playerInputMove;
     private bool playerMoves = false;
     public Vector2 tilt;
+    public Vector3 startPos;
     
     [SerializeField]
     private float movementSpeed;
@@ -25,6 +26,18 @@ public class PlayerControls : MonoBehaviour
         {
             MovePlayer();
         }
+    }
+    public void StartGame()
+    {
+        rb.isKinematic = false;
+    }
+    public void StopGame()
+    {
+        rb.isKinematic = true;
+    }
+    void Start()
+    {
+        startPos = transform.position;
     }
     private void OnEnable()
     {
@@ -47,16 +60,24 @@ public class PlayerControls : MonoBehaviour
     {
         playerInputMove = Vector2.zero;
         playerMoves = false;
-        rb.linearVelocity = Vector2.zero;
     }
     void MovePlayer()
     {
-        Vector3 playerInputMoveCalib = (playerInputMove.normalized + tilt * 0.5f) * movementSpeed;
+        Vector3 playerInputMoveCalib = (playerInputMove.normalized + tilt * 0.8f) * movementSpeed;
         Vector3 moveVec = new Vector3(playerInputMoveCalib.x, 0, playerInputMoveCalib.y);
-        rb.linearVelocity = moveVec;
+        // rb.AddForce(moveVec, ForceMode.VelocityChange);
+        rb.MovePosition(
+            rb.position + moveVec * Time.fixedDeltaTime
+        );
     }
     void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(tilt.x, 0, tilt.y));
+    }
+    void Reset()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = Vector2.zero;
+        rb.position = startPos;
     }
 }

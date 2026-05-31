@@ -19,9 +19,18 @@ public class JunkSpawner : MonoBehaviour
     public float minSpawnT;
     public float maxSpawnT;
 
-    private void Start()
+    public void StartGame()
     {
         StartCoroutine(SpawnCoroutine());
+    }
+    public void StopGame()
+    {
+        StopCoroutine(SpawnCoroutine());
+    }
+    public void VelocityChange(float velocity)
+    {
+        minSpeed = velocity * 0.8f;
+        maxSpeed = velocity * 1.2f;
     }
     private IEnumerator SpawnCoroutine()
     {
