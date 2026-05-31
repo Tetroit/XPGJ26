@@ -25,14 +25,14 @@ public class JunkSpawner : MonoBehaviour
     }
     public void StopGame()
     {
-        StopCoroutine(SpawnCoroutine());
+        StopAllCoroutines();
     }
     public void VelocityChange(float velocity)
     {
         minSpeed = velocity * 0.8f;
         maxSpeed = velocity * 1.2f;
-        minSpawnT = 25f / velocity;
-        maxSpawnT = 50f / velocity;
+        minSpawnT = 15f / velocity;
+        maxSpawnT = 30f / velocity;
     }
     private IEnumerator SpawnCoroutine()
     {

@@ -13,6 +13,9 @@ public class PlayerControls : MonoBehaviour
     public Vector3 startPos;
     
     [SerializeField]
+    public Animator animator;
+    
+    [SerializeField]
     public float movementSpeed = 5;
     void Awake()
     {
@@ -60,12 +63,14 @@ public class PlayerControls : MonoBehaviour
     {
         if (GameManager.instance.gameRunning)
         {
+            animator.SetBool("IsWalking", true);
             playerInputMove = ctx.ReadValue<Vector2>();
             playerMoves = true;
         }
     }
     void StopMove(InputAction.CallbackContext ctx)
     {
+        animator.SetBool("IsWalking", false);
         playerInputMove = Vector2.zero;
         playerMoves = false;
     }
@@ -77,6 +82,9 @@ public class PlayerControls : MonoBehaviour
         rb.MovePosition(
             rb.position + moveVec * Time.fixedDeltaTime
         );
+        rb.angularVelocity = Vector2.zero;
+        Quaternion targetRotation = Quaternion.LookRotation(moveVec);
+        rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, Time.fixedDeltaTime * 5f);
     }
     void OnDrawGizmos()
     {

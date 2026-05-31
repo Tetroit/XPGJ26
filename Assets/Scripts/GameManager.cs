@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     PlayerControls controls;
     [SerializeField]
     GameObject BOOM;
+    [SerializeField] private FurnaceDriver furnace;
     void Awake()
     {
         inputS = new InputS();
@@ -100,19 +101,29 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Stopped");
         ResetGame();
     }
+    IEnumerator DistScore()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(25f / speed);
+            score++;
+        }
+    }
     public void ResetGame()
     {
         fuel = maxFuel;
         fuelSpeed = 0.1f;
         score = 0;
-        speed = 5;
+        speed = 5f;
+        furnace.furnaceDuration = 2.0f;
+        controls.movementSpeed = 5f;
         dispatcher.OnSpeedChange?.Invoke(speed);
         dispatcher.OnScoreChange?.Invoke(score);
         dispatcher.OnFuelChange?.Invoke(fuel);
     }
     IEnumerator SpeedUpFuel()
     {
-        fuelSpeed += 0.002f;
+        fuelSpeed += 0.005f;
         yield return new WaitForSeconds(1);
     }
     void Update()
@@ -122,16 +133,20 @@ public class GameManager : MonoBehaviour
             fuel -= Time.deltaTime * fuelSpeed;
             dispatcher.OnFuelChange?.Invoke(fuel);
         }
+        if (fuel <= 0)
+        {
+            DieOOM();
+        }
     }
     public void AddScore(int score)
     {
         this.score += score;
-        dispatcher.OnScoreChange?.Invoke(score);
+        dispatcher.OnScoreChange?.Invoke(this.score);
     }
     public void SetScore(int score)
     {
         this.score = score;
-        dispatcher.OnScoreChange?.Invoke(score);
+        dispatcher.OnScoreChange?.Invoke(this.score);
     }
     public void SetSpeed(float speed)
     {
@@ -204,5 +219,6 @@ public class GameManager : MonoBehaviour
     public void AddPlayerSpeed(int i)
     {
         controls.movementSpeed += i;
+        furnace.furnaceDuration = 10.0f/controls.movementSpeed;
     }
 }

@@ -28,6 +28,13 @@ public class PlayerAvatar : MonoBehaviour
     {
         GameManager.instance.inputS.Player.Interact.started-=ProcessInteract;
     }
+    public void StopGame()
+    {
+        if (context != null)
+        {
+            Destroy(context.gameObject);
+        }
+    }
     void Awake()
     {
         GameManager.instance.inputS = new InputS();

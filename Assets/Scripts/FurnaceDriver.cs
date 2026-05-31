@@ -13,6 +13,8 @@ public class FurnaceDriver : MonoBehaviour
     private bool maxLoc = false;
     private Rigidbody rb;
     public bool canPush = false;
+    
+    public float furnaceDuration = 2.0f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,14 +35,14 @@ public class FurnaceDriver : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(4, 15));
             if (maxLoc)
-                rb.DOMoveZ(maxZ, 1f).SetEase(Ease.InQuad);
+                rb.DOMove(new Vector3(Random.Range(-9f, 9f), rb.position.y, maxZ), furnaceDuration).SetEase(Ease.InQuad);
             else
-                rb.DOMoveZ(minZ, 1f).SetEase(Ease.InQuad);
+                rb.DOMove(new Vector3(Random.Range(-9f, 9f), rb.position.y, minZ), furnaceDuration).SetEase(Ease.InQuad);
             maxLoc = !maxLoc;
             Sequence seq = DOTween.Sequence()
-                .AppendInterval(0.5f)
+                .AppendInterval(furnaceDuration/2)
                 .AppendCallback(() => canPush = true)
-                .AppendInterval(0.5f)
+                .AppendInterval(furnaceDuration/2)
                 .AppendCallback(() => canPush = false);
         }
     }

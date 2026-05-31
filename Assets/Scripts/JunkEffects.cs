@@ -26,7 +26,8 @@ public class JunkEffects : MonoBehaviour
         }
         if (junkType == JunkType.Maxwell)
         {
-            GameManager.instance.AddPlayerSpeed(1);
+            GameManager.instance.AddPlayerSpeed(2);
+            GameManager.instance.AddScore(5);
         }
         if (junkType == JunkType.Pearto)
         {
@@ -46,10 +47,11 @@ public class JunkEffects : MonoBehaviour
         if (junkType == JunkType.Poop)
         {
             GameManager.instance.AddFuel(-1);
+            GameManager.instance.AddScore(2);
         }
         if (junkType == JunkType.Coal)
         {
-            GameManager.instance.AddFuel(1);
+            GameManager.instance.AddFuel(5);
         }
         if (junkType == JunkType.Maxwell)
         {
@@ -58,6 +60,7 @@ public class JunkEffects : MonoBehaviour
         if (junkType == JunkType.Pearto)
         {
             GameManager.instance.AddSpeed(1);
+            GameManager.instance.AddFuel(2);
         }
     }
 }

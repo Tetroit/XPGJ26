@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: New Junk Pool
   m_EditorClassIdentifier: Assembly-CSharp::JunkPool
   src:
-  - prob: 2
+  - prob: 1.5
     junkType: {fileID: 8161386839109000939, guid: 5190faec2b0178c468745350b69903f6, type: 3}
-  - prob: 2
+  - prob: 1.5
     junkType: {fileID: 2812930754999822505, guid: 82cddfbee27949f4daaa7a6c0a9ef5e4, type: 3}
-  - prob: 2
+  - prob: 1
     junkType: {fileID: 7626786680601853118, guid: 430d98a4dde94f0489f922e088c3c010, type: 3}
-  - prob: 5
+  - prob: 3
     junkType: {fileID: 7352460901995353247, guid: 6c6260fdc3659824caccfde78248c13d, type: 3}
-  - prob: 5
+  - prob: 1
     junkType: {fileID: 7290837631625194891, guid: f720c44f4dcbd8a4ebfa1a8d9c48afce, type: 3}
-  - prob: 5
+  - prob: 0.5
     junkType: {fileID: 2334406132734763810, guid: 4601f58241264ae4aa87bfea58433c69, type: 3}
-  - prob: 5
+  - prob: 1
     junkType: {fileID: 7908358660299771742, guid: 6f8300bf05cbdc244bdf91e0a652d9d8, type: 3}
