@@ -13,6 +13,9 @@ public class FurnaceDriver : MonoBehaviour
     private bool maxLoc = false;
     private Rigidbody rb;
     public bool canPush = false;
+
+    public float minDur = 5f;
+    public float maxDur = 15f;
     
     public float furnaceDuration = 2.0f;
     void Start()
@@ -33,7 +36,7 @@ public class FurnaceDriver : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(4, 15));
+            yield return new WaitForSeconds(Random.Range(minDur, maxDur));
             if (maxLoc)
                 rb.DOMove(new Vector3(Random.Range(-9f, 9f), rb.position.y, maxZ), furnaceDuration).SetEase(Ease.InQuad);
             else

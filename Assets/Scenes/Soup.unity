@@ -1757,6 +1757,8 @@ MonoBehaviour:
   maxZ: 9
   maxLoc: 0
   canPush: 0
+  minDur: 5
+  maxDur: 15
   furnaceDuration: 2
 --- !u!1 &410087039
 GameObject:

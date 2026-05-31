@@ -17,7 +17,7 @@ public class PlayerAvatar : MonoBehaviour
             ScanJunk();
         if (hasItem)
         {
-            context.transform.position = transform.position + transform.up * 2;
+            context.transform.position = Vector3.Lerp(context.transform.position, transform.position + transform.up * 2, Time.deltaTime * 3);
         }
     }
     private void OnEnable()
@@ -89,7 +89,6 @@ public class PlayerAvatar : MonoBehaviour
     void TakeObject()
     {
         context.junkManager.junks.Remove(context);
-        context.transform.position = transform.position + transform.up * 2;
         context.isSwimming = false;
         hasItem = true;
     }

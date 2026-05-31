@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
         inputS.Player.Disable();
         ResetGame();
     }
+    private Coroutine fuelCoroutine;
+    private Coroutine scoreCoroutine;
     public void StartGame()
     {
         gameRunning = true;
@@ -65,7 +67,8 @@ public class GameManager : MonoBehaviour
         menu.interactable = false;
         menu.DOFade(0f, 0.25f); 
         dispatcher.OnGameStart?.Invoke();
-        StartCoroutine(SpeedUpFuel());
+        fuelCoroutine = StartCoroutine(SpeedUpFuel());
+        scoreCoroutine = StartCoroutine(DistScore());
         Debug.Log("Game Started");
         inputS.Player.Move.performed += ctx =>
         {
@@ -94,7 +97,8 @@ public class GameManager : MonoBehaviour
         gameRunning = false;
         inputS.Player.Disable();
         dispatcher.OnGameStop?.Invoke();
-        StopCoroutine(SpeedUpFuel());
+        StopCoroutine(fuelCoroutine);
+        StopCoroutine(scoreCoroutine);
         menu.DOFade(1f, 0.25f).OnComplete(() => {
             menu.interactable = true;
         });
@@ -105,8 +109,9 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(25f / speed);
+            yield return new WaitForSeconds(50f / speed);
             score++;
+            dispatcher.OnScoreChange?.Invoke(score);
         }
     }
     public void ResetGame()
@@ -219,6 +224,15 @@ public class GameManager : MonoBehaviour
     public void AddPlayerSpeed(int i)
     {
         controls.movementSpeed += i;
-        furnace.furnaceDuration = 10.0f/controls.movementSpeed;
+    }
+
+    public void AddFurnaceSpeed()
+    {
+        furnace.furnaceDuration *= 0.92f;
+    }
+    public void AddFurnaceFreq()
+    {
+        furnace.minDur *= 0.92f;
+        furnace.maxDur *= 0.92f;
     }
 }
